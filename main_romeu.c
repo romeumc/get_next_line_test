@@ -6,12 +6,12 @@
 /*   By: rmartins <rmartins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 21:08:42 by rmartins          #+#    #+#             */
-/*   Updated: 2021/01/27 00:52:46 by rmartins         ###   ########.fr       */
+/*   Updated: 2021/01/27 13:44:06 by rmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
-#include "../get_next_line.h"
+#include "../get_next_line/get_next_line.h"
 
 void	doprint(int out, char **str, int line)
 {
@@ -83,7 +83,7 @@ int		main(void)
 	// testfd();
 	testfile("../test2.mrjvs/tests/normal/5.txt");
 	testfile("../test2.mrjvs/tests/normal/1.txt");
-	testfile("../test2.mrjvs/tests/normal/4.txt");
+	//testfile("../test2.mrjvs/tests/normal/4.txt");
 	testfile("romeu.tester/teste1.txt");
 	//testfile("tester.mazoise/files/alphabet");
 	//testfile("tester.mazoise/files/huge_alphabet");
