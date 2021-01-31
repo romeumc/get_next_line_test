@@ -6,10 +6,11 @@
 /*   By: rmartins <rmartins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 21:08:42 by rmartins          #+#    #+#             */
-/*   Updated: 2021/01/27 13:44:06 by rmartins         ###   ########.fr       */
+/*   Updated: 2021/01/31 11:15:29 by rmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <fcntl.h>
 #include "../get_next_line/get_next_line.h"
 
@@ -39,27 +40,33 @@ void	test(int fd)
 
 int		testfile(char *filename)
 {
-	int		fd;
-	int		i;
-	int		j;
-	char	*line;
+	int fd;
+	
+	fd = open(filename, O_RDONLY);
+	test(fd);
 
-	line = 0;
-	j = 1;
-	printf("\n\n=== TESTE - %s - BUFF_SIZE:%d ===\n\n", filename, BUFFER_SIZE);
-	if (!(fd = open(filename, O_RDONLY)))
-	{
-		printf("\nError in open\n");
-		return (0);
-	}
-	while ((i = get_next_line(fd, &line)) > 0)
-	{
-		printf("[OUT %d] |%s|\n", i, line);
-		j++;
-	}
-	printf("[OUT %d] |%s|\n", i, line);
-	free(line);
-	close(fd);
+	// int		fd;
+	// int		i;
+	// int		j;
+	// char	*line;
+
+	// line = 0;
+	// j = 1;
+	// printf("\n\n=== TESTE - %s - BUFF_SIZE:%d ===\n\n", filename, BUFFER_SIZE);
+	// if (!(fd = open(filename, O_RDONLY)))
+	// {
+	// 	printf("\nError in open\n");
+	// 	return (0);
+	// }
+	// while ((i = get_next_line(fd, &line)) > 0)
+	// {
+	// 	printf("[OUT %d] |%s|\n", i, line);
+	// 	free(line);
+	// 	j++;
+	// }
+	// printf("[OUT %d] |%s|\n", i, line);
+	// free(line);
+	// close(fd);
 	return (0);
 }
 
@@ -78,14 +85,136 @@ int		testfd(void)
 	return (0);
 }
 
+void	testmultiple()
+{
+	char	*st;
+	int		i;
+	int		i2;
+	
+	int		fd;
+	int		fd2;
+	fd = open("../test2.mrjvs/tests/bonus/1.txt", O_RDONLY);
+	fd2 = open("../test2.mrjvs/tests/bonus/2.txt", O_RDONLY);
+	
+
+	printf("\n==========================================\n");
+	printf("========= TEST : BONUS ===================\n");
+	printf("==========================================\n\n");
+	st = NULL;
+	i = 1;
+	i2 = 1;
+	doprint(get_next_line(fd, &st), &st, i++);
+	doprint(get_next_line(fd2, &st), &st, i2++);
+	doprint(get_next_line(fd2, &st), &st, i2++);
+	doprint(get_next_line(fd, &st), &st, i++);
+	doprint(get_next_line(fd, &st), &st, i++);
+	doprint(get_next_line(fd2, &st), &st, i2++);
+	doprint(get_next_line(fd, &st), &st, i++);
+	doprint(get_next_line(fd2, &st), &st, i2++);
+	doprint(get_next_line(fd2, &st), &st, i2++);
+	doprint(get_next_line(fd, &st), &st, i++);
+	doprint(get_next_line(fd2, &st), &st, i2++);
+	doprint(get_next_line(fd, &st), &st, i++);
+	doprint(get_next_line(fd2, &st), &st, i2++);
+	doprint(get_next_line(fd2, &st), &st, i2++);
+	close(fd);
+	close(fd2);
+}
+
+int	testmarge()
+{
+	printf("\n==========================================\n");
+	printf("============= TEST 7 : Marge =============\n");
+	printf("==========================================\n\n");
+	
+	int		fd;
+	int		i;
+	int		j;
+	char	*line = 0;
+	int		fd2;
+
+	j = 1;
+	fd = open("../test1.Mazoise/files/mix_marge1", O_RDONLY);
+	fd2 = open("../test1.Mazoise/files/mix_marge2", O_RDONLY);
+	
+	while (j < 8)
+	{
+		if ((i = get_next_line(fd, &line)) > 0)
+			printf("%s\n", line);
+		free(line);
+		j++;
+	}
+	while (j < 13)
+	{
+		if ((i = get_next_line(fd2, &line)) > 0)
+			printf("%s\n", line);
+		free(line);
+		j++;
+	}
+	if ((i = get_next_line(fd, &line)) > 0)
+		printf("%s\n", line);
+	free(line);
+	j++;
+	if ((i = get_next_line(fd2, &line)) > 0)
+		printf("%s\n", line);
+	free(line);
+	j++;
+	if ((i = get_next_line(fd2, &line)) > 0)
+		printf("%s\n", line);
+	free(line);
+	j++;
+	if ((i = get_next_line(fd, &line)) > 0)
+		printf("%s\n", line);
+	free(line);
+	j++;
+	if ((i = get_next_line(fd2, &line)) > 0)
+		printf("%s\n", line);
+	free(line);
+	j++;
+	if ((i = get_next_line(fd, &line)) > 0)
+		printf("%s\n", line);
+	free(line);
+	j++;
+	while (j < 23)
+	{
+		if ((i = get_next_line(fd2, &line)) > 0)
+			printf("%s\n", line);
+		free(line);
+		j++;
+	}
+	get_next_line(fd2, &line);
+	printf("%s\n", line);
+	free(line);
+	j++;
+	while (j < 25)
+	{
+		if ((i = get_next_line(fd, &line)) > 0)
+			printf("%s\n", line);
+		free(line);
+		j++;
+	}
+	get_next_line(fd, &line);
+	printf("%s\n", line);
+	free(line);
+	close(fd);
+	close(fd2);
+	return (0);
+}
+
+
 int		main(void)
 {
 	// testfd();
-	testfile("../test2.mrjvs/tests/normal/5.txt");
-	testfile("../test2.mrjvs/tests/normal/1.txt");
-	//testfile("../test2.mrjvs/tests/normal/4.txt");
-	testfile("romeu.tester/teste1.txt");
-	//testfile("tester.mazoise/files/alphabet");
-	//testfile("tester.mazoise/files/huge_alphabet");
+	//testfile("../test2.mrjvs/tests/normal/5.txt");
+	//testfile("../test2.mrjvs/tests/normal/1.txt");
+	//testfile("../test2.mrjvs/tests/normal/1111.txt");
+	//testfile("teste1.txt");
+	//testfile("../test1.Mazoise/files/alphabet");
+	//testfile("../test1.Mazoise/files/huge_alphabet");
+	//testfile("../test1.Mazoise/files/mix_marge1");
+	//testfile("../test1.Mazoise/files/mix_marge2");
 	//test(0);
+
+	testmultiple();
+	testmarge();
 }
