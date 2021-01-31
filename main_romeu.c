@@ -6,17 +6,18 @@
 /*   By: rmartins <rmartins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 21:08:42 by rmartins          #+#    #+#             */
-/*   Updated: 2021/01/31 16:40:25 by rmartins         ###   ########.fr       */
+/*   Updated: 2021/01/31 21:33:30 by rmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <fcntl.h>
 #include "../get_next_line/get_next_line.h"
+#include "ft_ansi.h"
 
-void	doprint(int out, char **str, int line)
+void	doprint(int out, char **str, size_t line)
 {
-	printf("(LINE %i) [OUT %i] |%s|\n", line, out, *str);
+	printf(ANSI_F_CYAN "%zu (%d)" ANSI_RESET "\t|%s" ANSI_F_CYAN "$\n" ANSI_RESET, line, out, *str);
 	free(*str);
 	*str = NULL;
 }
@@ -25,7 +26,7 @@ void	test(int fd)
 {
 	char	*st;
 	int		out;
-	int		i;
+	size_t	i;
 
 	st = NULL;
 	i = 1;
@@ -44,29 +45,6 @@ int		testfile(char *filename)
 	
 	fd = open(filename, O_RDONLY);
 	test(fd);
-
-	// int		fd;
-	// int		i;
-	// int		j;
-	// char	*line;
-
-	// line = 0;
-	// j = 1;
-	// printf("\n\n=== TESTE - %s - BUFF_SIZE:%d ===\n\n", filename, BUFFER_SIZE);
-	// if (!(fd = open(filename, O_RDONLY)))
-	// {
-	// 	printf("\nError in open\n");
-	// 	return (0);
-	// }
-	// while ((i = get_next_line(fd, &line)) > 0)
-	// {
-	// 	printf("[OUT %d] |%s|\n", i, line);
-	// 	free(line);
-	// 	j++;
-	// }
-	// printf("[OUT %d] |%s|\n", i, line);
-	// free(line);
-	// close(fd);
 	return (0);
 }
 
@@ -201,20 +179,167 @@ int	testmarge()
 	return (0);
 }
 
+void	test_basic(void)
+{
+	size_t	line_count;
+	char	*line;
+	int		fd;
+	int		out = 1;
+
+	line_count = 0;
+	line = NULL;
+	printf("Opening file... ");
+	fd = open("../test3.TinfoilPancakes/test_basic_dino.txt", O_RDONLY);
+	if (fd < 0)
+	{
+		printf(ANSI_F_RED "Error opening %s.\n" ANSI_RESET, "test_basic_dino.txt");
+		return ;
+	}
+	printf("Done.\n");
+	printf(ANSI_F_YELLOW "Reading Lines...\n" ANSI_RESET);
+	while (out == 1)
+	{
+		out = get_next_line(fd, &line);
+		doprint(out, &line, ++line_count);
+	}
+	if (line_count != 13)
+		printf(ANSI_F_RED "ERROR: test_basic(...) failed.\n" ANSI_RESET);
+	else
+		printf(ANSI_F_GREEN "Done.\n" ANSI_RESET);
+	printf(ANSI_F_YELLOW "[ Lines Expected: 13, Lines Read: %zu ]\n" ANSI_RESET, line_count);
+	fd = close(fd);
+	if (fd < 0)
+	{
+		printf(ANSI_F_BRED "Fatal Error: Could not close open file.\n" ANSI_RESET);
+		exit(EXIT_FAILURE);
+	}
+}
+
+void	test_poems(void)
+{
+	size_t	line_count;
+	char	*line;
+	int		fd_i;
+	int		fd_a;
+	int		fd_b;
+	int		out;
+
+	line = NULL;
+	line_count = 0;
+	fd_i = open("../test3.TinfoilPancakes/timmy_test_interleave.txt", O_RDONLY);
+	fd_a = open("../test3.TinfoilPancakes/timmy_test_a.txt", O_RDONLY);
+	fd_b = open("../test3.TinfoilPancakes/timmy_test_b.txt", O_RDONLY);
+	if (fd_i < 0 || fd_a < 0 || fd_b < 0)
+	{
+		printf(ANSI_F_RED "Error opening files.\n" ANSI_RESET);
+		return ;
+	}
+	printf(ANSI_F_YELLOW "Starting interleaved file read test...\n\n" ANSI_RESET);
+	line_count = 0;
+	while (line_count < 4)
+	{
+		out = get_next_line(fd_i, &line);
+		doprint(out, &line, ++line_count);
+	}
+	out = 1;
+	while (out == 1)
+	{
+		out = get_next_line(fd_a, &line);
+		doprint(out, &line, ++line_count);
+	}
+	get_next_line(fd_i, &line);
+	doprint(out, &line, ++line_count);
+	
+	out = 1;
+	while (out == 1)
+	{
+		out = get_next_line(fd_b, &line);
+		doprint(out, &line, ++line_count);
+	}
+
+	out = 1;
+	while (out == 1)
+	{
+		out = get_next_line(fd_i, &line);
+		doprint(out, &line, ++line_count);
+	}
+	
+	if (line_count != 45)
+		printf(ANSI_F_RED "\nERROR: Interleaved files test failed! [ test_poems(...); ]\n" ANSI_RESET);
+	else
+		printf(ANSI_F_GREEN "\nDone.\n" ANSI_RESET);
+	printf(ANSI_F_YELLOW "[ Lines Expected: 45, Lines Read: %zu ]\n" ANSI_RESET, line_count);
+	fd_i = close(fd_i);
+	fd_a = close(fd_a);
+	fd_b = close(fd_b);
+	if (fd_i < 0 || fd_a < 0 || fd_b < 0)
+	{
+		printf(ANSI_F_BRED "Fatal Error: Could not close open files!\n" ANSI_RESET);
+		exit(EXIT_FAILURE);
+	}
+}
+
+void	test_null_cases(void)
+{
+	char	*line;
+	int		temp_fd;
+	size_t	line_count;
+	int		out;
+
+	line = NULL;
+	line_count = 0;
+	temp_fd = open("../test3.TinfoilPancakes/test_null_cases.txt", O_RDONLY);
+	printf("Testing failure cases...\n");
+	printf("Passing NULL pointer to line parameter of get_next_line(...)\n");
+	get_next_line(temp_fd, NULL);
+	printf("Passing invalid file descriptor (fd = -1)...\n");
+	get_next_line(-1, &line);
+	printf("Passing invalid file descriptor and line pointer...\n");
+	printf(ANSI_F_GREEN "Done.\n" ANSI_RESET "As a prize here is some text:\n\n");
+	if (temp_fd < 0)
+	{
+		printf(ANSI_F_RED "Nevermind. The file couln't be opened so you get nothing :C\n" ANSI_RESET);
+		return ;
+	}
+
+	out = 1;
+	while (out == 1)
+	{
+		out = get_next_line(temp_fd, &line);
+		doprint(out, &line, ++line_count);
+	}
+	
+	if (line_count == 16)
+		printf("\nDid you enjoy your prize? Yes? Okay let's move on.\n");
+	else
+		printf(ANSI_F_RED "Hey! Your prize isn't working properly! What's going on?\n" ANSI_RESET);
+	printf(ANSI_F_YELLOW "[ Prize lines read: %zu, Prize lines expected: 16 ]\n" ANSI_RESET, line_count);
+	temp_fd = close(temp_fd);
+	if (temp_fd < 0)
+	{
+		printf("Fatal Error: Could not close open file!\n");
+		exit(EXIT_FAILURE);
+	}
+}
 
 int		main(void)
 {
-	// testfd();
-	//testfile("../test2.mrjvs/tests/normal/5.txt");
-	//testfile("../test2.mrjvs/tests/normal/1.txt");
-	//testfile("../test2.mrjvs/tests/normal/2.txt");
-	//testfile("teste1.txt");
-	//testfile("../test1.Mazoise/files/alphabet");
-	//testfile("../test1.Mazoise/files/huge_alphabet");
-	//testfile("../test1.Mazoise/files/mix_marge1");
-	//testfile("../test1.Mazoise/files/mix_marge2");
-	//test(0);
+	//testfd();
+	test(0);
+	testfile("../test2.mrjvs/tests/normal/5.txt");
+	testfile("../test2.mrjvs/tests/normal/1.txt");
+	testfile("../test2.mrjvs/tests/normal/2.txt");
+	testfile("teste1.txt");
+	testfile("../test1.Mazoise/files/alphabet");
+	testfile("../test1.Mazoise/files/huge_alphabet");
+	testfile("../test1.Mazoise/files/mix_marge1");
+	testfile("../test1.Mazoise/files/mix_marge2");
+	//testfile("../test3.TinfoilPancakes/timmy_test_a.txt");
 
-	//testmultiple();
+
+	testmultiple();
 	testmarge();
+	test_basic();
+	test_poems();
+	test_null_cases();
 }
