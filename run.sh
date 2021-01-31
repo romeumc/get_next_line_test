@@ -11,5 +11,5 @@ if [ ! $1 ]; then
 else
 	echo "gcc -Wall -Werror -Wextra $FLAG -D BUFFER_SIZE=$1 ../get_next_line/get_next_line.c ../get_next_line/get_next_line_utils.c main_romeu.c"	
 	gcc -Wall -Werror -Wextra $FLAG -D BUFFER_SIZE=$1 ../get_next_line/get_next_line.c ../get_next_line/get_next_line_utils.c main_romeu.c && ./a.out
-	rm a.out
+	#rm a.out
 fi

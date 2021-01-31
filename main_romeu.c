@@ -6,7 +6,7 @@
 /*   By: rmartins <rmartins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 21:08:42 by rmartins          #+#    #+#             */
-/*   Updated: 2021/01/31 11:15:29 by rmartins         ###   ########.fr       */
+/*   Updated: 2021/01/31 16:40:25 by rmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ int		main(void)
 	// testfd();
 	//testfile("../test2.mrjvs/tests/normal/5.txt");
 	//testfile("../test2.mrjvs/tests/normal/1.txt");
-	//testfile("../test2.mrjvs/tests/normal/1111.txt");
+	//testfile("../test2.mrjvs/tests/normal/2.txt");
 	//testfile("teste1.txt");
 	//testfile("../test1.Mazoise/files/alphabet");
 	//testfile("../test1.Mazoise/files/huge_alphabet");
@@ -215,6 +215,6 @@ int		main(void)
 	//testfile("../test1.Mazoise/files/mix_marge2");
 	//test(0);
 
-	testmultiple();
+	//testmultiple();
 	testmarge();
 }
