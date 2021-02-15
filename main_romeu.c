@@ -6,7 +6,7 @@
 /*   By: rmartins <rmartins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 21:08:42 by rmartins          #+#    #+#             */
-/*   Updated: 2021/01/31 21:33:30 by rmartins         ###   ########.fr       */
+/*   Updated: 2021/02/15 11:50:20 by rmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,8 @@ int	testmarge()
 	int		fd2;
 
 	j = 1;
-	fd = open("../test1.Mazoise/files/mix_marge1", O_RDONLY);
-	fd2 = open("../test1.Mazoise/files/mix_marge2", O_RDONLY);
+	fd = open("../test1.Mazoise.42TESTERS-GNL/files/mix_marge1", O_RDONLY);
+	fd2 = open("../test1.Mazoise.42TESTERS-GNL/files/mix_marge2", O_RDONLY);
 	
 	while (j < 8)
 	{
@@ -189,7 +189,7 @@ void	test_basic(void)
 	line_count = 0;
 	line = NULL;
 	printf("Opening file... ");
-	fd = open("../test3.TinfoilPancakes/test_basic_dino.txt", O_RDONLY);
+	fd = open("../test3.TinfoilPancakes.get-next-line-testing-tools/test_basic_dino.txt", O_RDONLY);
 	if (fd < 0)
 	{
 		printf(ANSI_F_RED "Error opening %s.\n" ANSI_RESET, "test_basic_dino.txt");
@@ -226,9 +226,9 @@ void	test_poems(void)
 
 	line = NULL;
 	line_count = 0;
-	fd_i = open("../test3.TinfoilPancakes/timmy_test_interleave.txt", O_RDONLY);
-	fd_a = open("../test3.TinfoilPancakes/timmy_test_a.txt", O_RDONLY);
-	fd_b = open("../test3.TinfoilPancakes/timmy_test_b.txt", O_RDONLY);
+	fd_i = open("../test3.TinfoilPancakes.get-next-line-testing-tools/timmy_test_interleave.txt", O_RDONLY);
+	fd_a = open("../test3.TinfoilPancakes.get-next-line-testing-tools/timmy_test_a.txt", O_RDONLY);
+	fd_b = open("../test3.TinfoilPancakes.get-next-line-testing-tools/timmy_test_b.txt", O_RDONLY);
 	if (fd_i < 0 || fd_a < 0 || fd_b < 0)
 	{
 		printf(ANSI_F_RED "Error opening files.\n" ANSI_RESET);
@@ -288,7 +288,7 @@ void	test_null_cases(void)
 
 	line = NULL;
 	line_count = 0;
-	temp_fd = open("../test3.TinfoilPancakes/test_null_cases.txt", O_RDONLY);
+	temp_fd = open("../test3.TinfoilPancakes.get-next-line-testing-tools/test_null_cases.txt", O_RDONLY);
 	printf("Testing failure cases...\n");
 	printf("Passing NULL pointer to line parameter of get_next_line(...)\n");
 	get_next_line(temp_fd, NULL);
@@ -326,14 +326,14 @@ int		main(void)
 {
 	//testfd();
 	test(0);
-	testfile("../test2.mrjvs/tests/normal/5.txt");
-	testfile("../test2.mrjvs/tests/normal/1.txt");
-	testfile("../test2.mrjvs/tests/normal/2.txt");
+	testfile("../test2.mrjvs.42cursus_gnl_tests/tests/normal/5.txt");
+	testfile("../test2.mrjvs.42cursus_gnl_tests/tests/normal/1.txt");
+	testfile("../test2.mrjvs.42cursus_gnl_tests/tests/normal/2.txt");
 	testfile("teste1.txt");
-	testfile("../test1.Mazoise/files/alphabet");
-	testfile("../test1.Mazoise/files/huge_alphabet");
-	testfile("../test1.Mazoise/files/mix_marge1");
-	testfile("../test1.Mazoise/files/mix_marge2");
+	testfile("../test1.Mazoise.42TESTERS-GNL/files/alphabet");
+	testfile("../test1.Mazoise.42TESTERS-GNL/files/huge_alphabet");
+	testfile("../test1.Mazoise.42TESTERS-GNL/files/mix_marge1");
+	testfile("../test1.Mazoise.42TESTERS-GNL/files/mix_marge2");
 	//testfile("../test3.TinfoilPancakes/timmy_test_a.txt");
 
 
